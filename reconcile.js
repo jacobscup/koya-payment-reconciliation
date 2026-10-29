@@ -49,7 +49,13 @@ let count = 0;
 
 for (const { event } of latestByTxn.values()) {
   if (event.status === "success") {
-    total += Number(event.amount);
+    const amount = Number(String(event.amount).replace(/,/g, ""));
+
+if (!Number.isFinite(amount)) {
+  console.log("Invalid amount in transaction:", JSON.stringify(event));
+} else {
+  total += amount;
+}
     count++;
   }
 }
